@@ -1,0 +1,31 @@
+curl -k -u admin:infoblox -X GET 'https://192.168.1.2/wapi/v2.3/network' -d 'network=192.168.1.0/24' -d '_return_fields=options,bootfile,bootserver,nextserver'
+[
+    {
+        "_ref": "network/ZG5zLm5ldHdvcmskMTAuOS4xNi4wLzI0LzA:192.168.1.0/24/default",
+        "bootfile": "pxeboot.com",
+        "bootserver": "192.168.1.100",
+        "nextserver": "192.168.1.100",
+        "options": [
+            {
+                "name": "dhcp-lease-time",
+                "num": 51,
+                "use_option": false,
+                "value": "43200",
+                "vendor_class": "DHCP"
+            },
+            {
+                "name": "routers",
+                "num": 3,
+                "use_option": true,
+                "value": "192.168.1.1",
+                "vendor_class": "DHCP"
+            }
+        ]
+    }
+]
+
+curl -k -u admin:infoblox -H 'Content-Type: application/json' -X PUT https://192.168.1.2/wapi/v2.3/network/ZG5zLm5ldHdvcmskMTAuOS4xNi4wLzI0LzA:192.168.1.0/24/default -d \
+'{
+        "bootserver": "192.168.1.101",
+        "nextserver": "192.168.1.101"
+}'
